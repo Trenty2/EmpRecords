@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 
 namespace EmpRecords.Models
 {
-    public class Supervisor
+    //Add code specific to Supervisor employee's here
+    public class Supervisor:Person
     {
         
     }

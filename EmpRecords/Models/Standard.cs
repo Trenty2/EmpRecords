@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace EmpRecords.Models
 {
-    public class Standard
+    //Add code specific to Standard employee's here
+    public class Standard:Person
     {
-        public int ID { get; set; }
-        public string LastName { get; set; }
-        public string FirstName { get; set; }
-        public DateTime StartingDate { get; set; }
-
-        public ICollection<Contract> Contracts { get; set; }
+      
     }
 }
