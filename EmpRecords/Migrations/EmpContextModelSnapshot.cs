@@ -32,11 +32,17 @@ namespace EmpRecords.Migrations
                     b.Property<int>("StandardID")
                         .HasColumnType("int");
 
+                    b.Property<int>("SupervisorID")
+                        .HasColumnType("int");
+
                     b.HasKey("ContractID");
 
                     b.HasIndex("DepartmentID");
 
-                    b.HasIndex("StandardID");
+                    b.HasIndex("StandardID")
+                        .IsUnique();
+
+                    b.HasIndex("SupervisorID");
 
                     b.ToTable("Contract");
                 });
@@ -85,6 +91,32 @@ namespace EmpRecords.Migrations
                     b.ToTable("Standard");
                 });
 
+            modelBuilder.Entity("EmpRecords.Models.Supervisor", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnName("FirstName")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<DateTime>("StartingDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Supervisor");
+                });
+
             modelBuilder.Entity("EmpRecords.Models.Contract", b =>
                 {
                     b.HasOne("EmpRecords.Models.Department", "Department")
@@ -94,8 +126,14 @@ namespace EmpRecords.Migrations
                         .IsRequired();
 
                     b.HasOne("EmpRecords.Models.Standard", "Standard")
+                        .WithOne("Contract")
+                        .HasForeignKey("EmpRecords.Models.Contract", "StandardID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EmpRecords.Models.Supervisor", "Supervisor")
                         .WithMany("Contracts")
-                        .HasForeignKey("StandardID")
+                        .HasForeignKey("SupervisorID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

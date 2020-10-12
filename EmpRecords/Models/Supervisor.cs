@@ -8,6 +8,7 @@ namespace EmpRecords.Models
     //Add code specific to Supervisor employee's here
     public class Supervisor:Person
     {
-        
+        public ICollection<Contract> Contracts { get; set; }
+
     }
 }

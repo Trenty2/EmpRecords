@@ -22,7 +22,7 @@ namespace EmpRecords.Controllers
         // GET: Contracts
         public async Task<IActionResult> Index()
         {
-            var empContext = _context.Contracts.Include(c => c.Department).Include(c => c.Standard);
+            var empContext = _context.Contracts.Include(c => c.Department).Include(c => c.Standard).Include(c => c.Supervisor);
             return View(await empContext.ToListAsync());
         }
 
@@ -37,6 +37,7 @@ namespace EmpRecords.Controllers
             var contract = await _context.Contracts
                 .Include(c => c.Department)
                 .Include(c => c.Standard)
+                .Include(c => c.Supervisor)
                 .FirstOrDefaultAsync(m => m.ContractID == id);
             if (contract == null)
             {
@@ -49,8 +50,9 @@ namespace EmpRecords.Controllers
         // GET: Contracts/Create
         public IActionResult Create()
         {
-            ViewData["DepartmentID"] = new SelectList(_context.Departments, "DepartmentID", "DepartmentID");
-            ViewData["StandardID"] = new SelectList(_context.Standards, "ID", "ID");
+            ViewData["DepartmentID"] = new SelectList(_context.Departments, "DepartmentID", "Title");
+            ViewData["StandardID"] = new SelectList(_context.Standards, "ID", "FirstName");
+            ViewData["SupervisorID"] = new SelectList(_context.Supervisors, "ID", "FirstName");
             return View();
         }
 
@@ -59,7 +61,7 @@ namespace EmpRecords.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ContractID,DepartmentID,StandardID")] Contract contract)
+        public async Task<IActionResult> Create([Bind("ContractID,DepartmentID,StandardID,SupervisorID")] Contract contract)
         {
             if (ModelState.IsValid)
             {
@@ -67,8 +69,9 @@ namespace EmpRecords.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DepartmentID"] = new SelectList(_context.Departments, "DepartmentID", "DepartmentID", contract.DepartmentID);
-            ViewData["StandardID"] = new SelectList(_context.Standards, "ID", "ID", contract.StandardID);
+            ViewData["DepartmentID"] = new SelectList(_context.Departments, "DepartmentID", "Title", contract.DepartmentID);
+            ViewData["StandardID"] = new SelectList(_context.Standards, "ID", "FirstName", contract.StandardID);
+            ViewData["SupervisorID"] = new SelectList(_context.Supervisors, "ID", "FirstName", contract.SupervisorID);
             return View(contract);
         }
 
@@ -85,8 +88,9 @@ namespace EmpRecords.Controllers
             {
                 return NotFound();
             }
-            ViewData["DepartmentID"] = new SelectList(_context.Departments, "DepartmentID", "DepartmentID", contract.DepartmentID);
-            ViewData["StandardID"] = new SelectList(_context.Standards, "ID", "ID", contract.StandardID);
+            ViewData["DepartmentID"] = new SelectList(_context.Departments, "DepartmentID", "Title", contract.DepartmentID);
+            ViewData["StandardID"] = new SelectList(_context.Standards, "ID", "FirstName", contract.StandardID);
+            ViewData["SupervisorID"] = new SelectList(_context.Supervisors, "ID", "FirstName", contract.SupervisorID);
             return View(contract);
         }
 
@@ -95,7 +99,7 @@ namespace EmpRecords.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ContractID,DepartmentID,StandardID")] Contract contract)
+        public async Task<IActionResult> Edit(int id, [Bind("ContractID,DepartmentID,StandardID,SupervisorID")] Contract contract)
         {
             if (id != contract.ContractID)
             {
@@ -122,8 +126,9 @@ namespace EmpRecords.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DepartmentID"] = new SelectList(_context.Departments, "DepartmentID", "DepartmentID", contract.DepartmentID);
-            ViewData["StandardID"] = new SelectList(_context.Standards, "ID", "ID", contract.StandardID);
+            ViewData["DepartmentID"] = new SelectList(_context.Departments, "DepartmentID", "Title", contract.DepartmentID);
+            ViewData["StandardID"] = new SelectList(_context.Standards, "ID", "FirstName", contract.StandardID);
+            ViewData["SupervisorID"] = new SelectList(_context.Supervisors, "ID", "FirstName", contract.SupervisorID);
             return View(contract);
         }
 
@@ -138,6 +143,7 @@ namespace EmpRecords.Controllers
             var contract = await _context.Contracts
                 .Include(c => c.Department)
                 .Include(c => c.Standard)
+                .Include(c => c.Supervisor)
                 .FirstOrDefaultAsync(m => m.ContractID == id);
             if (contract == null)
             {

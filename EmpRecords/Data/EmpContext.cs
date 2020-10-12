@@ -12,11 +12,14 @@ namespace EmpRecords.Data
         public DbSet<Department> Departments { get; set; }
         public DbSet<Contract> Contracts { get; set; }
         public DbSet<Standard> Standards { get; set; }
+        public DbSet<Supervisor> Supervisors { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Department>().ToTable("Department");
             modelBuilder.Entity<Contract>().ToTable("Contract");
             modelBuilder.Entity<Standard>().ToTable("Standard");
+            modelBuilder.Entity<Supervisor>().ToTable("Supervisor");
         }
     }
 }

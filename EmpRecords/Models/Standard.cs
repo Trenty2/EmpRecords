@@ -11,6 +11,7 @@ namespace EmpRecords.Models
     //Add code specific to Standard employee's here
     public class Standard:Person
     {
-      
+        public ICollection<Contract> Contracts { get; set; }
+
     }
 }

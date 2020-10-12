@@ -25,7 +25,6 @@ namespace EmpRecords.Models
         [Display(Name = "Starting Date")]
         public DateTime StartingDate { get; set; }
 
-        public ICollection<Contract> Contracts { get; set; }
 
         [Display(Name = "Full Name")]
         public string FullName

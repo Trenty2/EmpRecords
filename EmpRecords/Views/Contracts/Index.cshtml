@@ -7,7 +7,7 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Manage Roles</a>
+    <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -17,6 +17,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Standard)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Supervisor)
             </th>
             <th></th>
         </tr>
@@ -28,7 +31,10 @@
                 @Html.DisplayFor(modelItem => item.Department.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Standard.FullName)
+                @Html.DisplayFor(modelItem => item.Standard.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Supervisor.FirstName)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ContractID">Edit</a> |
